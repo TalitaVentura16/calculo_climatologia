@@ -1,2 +1,2 @@
 # calculo_climatologia
-Código para cálculo dos valores de monções locais 
+Código para cálculo do comprimento da estação seca.
