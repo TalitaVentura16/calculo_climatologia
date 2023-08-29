@@ -1,4 +1,4 @@
-# Calculo Climatologia
+# Cálculo Climatologia
 
 Bem-vindo, este programa tem como objetivo obter dados de precipitação acumulada para um período de 306 dias com intervalos de 5 dias, na climatologia esse tipo de dado é denominado pêntada. 
 
@@ -6,7 +6,7 @@ Para a realização do projeto é utilizada a base de dados - CHIRPS, do Google 
 
 **Descrição da base presente na documentação do GEE**
 
-Grupo de Riscos Climáticos Precipitação por infravermelho com dados da estação (CHIRPS) é um conjunto de dados de precipitação quase-global de +30 anos. CHIRPS incorpora Imagens de satélite com resolução de 0,05°, com dados de estações in situ criar séries temporais de chuvas em grade para análise de tendências e sazonais monitoramento de secas.
+Grupo de Riscos Climáticos Precipitação por infravermelho com dados da estação (CHIRPS), é um conjunto de dados de precipitação quase-global de +30 anos. CHIRPS incorpora Imagens de satélite com resolução de 0,05°, com dados de estações in situ criar séries temporais de chuvas em grade para análise de tendências e sazonais monitoramento de secas.
 
 **Informações Importantes**
 
