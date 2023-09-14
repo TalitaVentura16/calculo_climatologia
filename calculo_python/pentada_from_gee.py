@@ -28,27 +28,44 @@ def calcula_pentada(dataInicio, dataFim):
     # Obter informacoes das imagens e armazena em uma lista
     image_list = precipitation.toList(precipitation.size())
 
-    # Percorrer a lista de imagens e obter as datas e valores de precipitacao
+    
+    # Inicializar variáveis para rastrear o ano e a numeração da pentada
+    ano_atual = None
+    num_pentada = 0
+
+    # Percorrer a lista de imagens e obter as datas e valores de precipitação
     datasValores = []
     for i in range(image_list.size().getInfo()):
         image = ee.Image(image_list.get(i))
-        dado = ee.Date(image.get('system:time_start')).format('yyyy-MM-dd').getInfo()
-        valor = image.reduceRegion(ee.Reducer.sum(), geometry=ee.Geometry.Point([-64.02760881257484,-4.436083218695817])).get('precipitation').getInfo()
-        datasValores.append((dado, valor))
+        data = ee.Date(image.get('system:time_start')).format('yyyy-MM-dd').getInfo()
+        ano = data.split('-')[0]
 
-    # Imprimi as datas e valores
-    for dado, valor in datasValores:
-        print(f"{dado}, {valor}")
+        # Verificar se o ano mudou
+        if ano != ano_atual:
+            ano_atual = ano
+            num_pentada = 1
+        else:
+            num_pentada += 1
+
+        valor = image.reduceRegion(ee.Reducer.sum(), geometry=ee.Geometry.Point([-64.02760881257484, -4.436083218695817])).get('precipitation').getInfo()
+        datasValores.append((data, valor, f"{num_pentada}º"))
+
+    # Imprimir as datas e valores
+    for data, valor, num in datasValores:
+        print(f"{data}, {valor}, {num}")
 
     return datasValores
 
+
 # Definir datas de inicio e fim 
 dataInicio = datetime.strptime("01-01-2014", "%d-%m-%Y")
-dataFim = dataInicio + timedelta(days=306)
+dataFim = datetime.strptime("01-01-2016", "%d-%m-%Y")
+##dataFim = dataInicio + timedelta(days=306)
+
 
 # Chamar a função para calcular a pentada
 df_pentada = calcula_pentada(dataInicio, dataFim)
-valoresPentada = pd.DataFrame(df_pentada, columns=["Data", "Valor de Precipitação"])
+valoresPentada = pd.DataFrame(df_pentada, columns=["Data", "Valor de Precipitação", "Pentada"])
 print(valoresPentada)
 
 # Salvar o DataFrame no arquivo Excel
