@@ -28,8 +28,7 @@ def calcula_pentada(dataInicio, dataFim):
     # Obter informacoes das imagens e armazena em uma lista
     image_list = precipitation.toList(precipitation.size())
 
-    
-    # Inicializar variáveis para rastrear o ano e a numeração da pentada
+    # Inicializar variaveis para rastrear o ano e a numeracao da pentada
     ano_atual = None
     num_pentada = 0
 
@@ -63,7 +62,7 @@ dataFim = datetime.strptime("01-01-2016", "%d-%m-%Y")
 ##dataFim = dataInicio + timedelta(days=306)
 
 
-# Chamar a função para calcular a pentada
+# Chamar a funcao para calcular a pentada
 df_pentada = calcula_pentada(dataInicio, dataFim)
 valoresPentada = pd.DataFrame(df_pentada, columns=["Data", "Valor de Precipitação", "Pentada"])
 print(valoresPentada)
