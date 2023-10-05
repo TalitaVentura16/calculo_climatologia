@@ -1,6 +1,6 @@
 # O objetivo deste programa eh coletar dados de precipitacao em uma regiao definida, 
 # a fim de se construir uma base de dados que registre a acumulacao de chuva em intervalos
-# de 5 dias, durante um período continuo de 305 dias. Na terminologia climatologica, esses 
+# de 5 dias, durante um periodo continuo de 305 dias. Na terminologia climatologica, esses 
 # intervalos sao referidos como "pentadas".
 
 # importacao do google earth engine
@@ -54,11 +54,12 @@ def calcula_pentada(dataInicio, dataFim):
     return df_pentada
 
 # Definir datas de inicio e fim 
-dataInicio = datetime.strptime("01-01-2014", "%d-%m-%Y")
-dataFim = datetime.strptime("01-01-2016", "%d-%m-%Y")
+dataInicio = datetime.strptime("01-01-2010", "%d-%m-%Y")
+dataFim = datetime.strptime("01-01-2020", "%d-%m-%Y")
+
 
 # Chamar a função para calcular a pentada
 df_pentada = calcula_pentada(dataInicio, dataFim)
 
 # Salvar o DataFrame no arquivo Excel
-df_pentada.to_excel('pentada_amazonia.xlsx', index=False)
+df_pentada.to_excel('pentada_amazonia_atualizada.xlsx', index=False)
