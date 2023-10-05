@@ -17,18 +17,18 @@ def calcula_pentada(dataInicio, dataFim):
     dataset = ee.ImageCollection('UCSB-CHG/CHIRPS/PENTAD') \
         .filterDate(dataInicio, dataFim)
 
-    # Selecionar a banda de precipitação
+    # Selecionar a banda de precipitacao
     precipitation = dataset.select('precipitation')
 
-    # Inicializar variáveis para rastrear o ano e a numeração da pentada
+    # Inicializar variaveis para rastrear o ano e a numeração da pentada
     ano_atual = None
     num_pentada = 0
 
-    # Crie um dicionário para armazenar os valores de precipitação por ano
+    # Crie um dicionario para armazenar os valores de precipitacao por ano
     valores_por_ano = {}
 
     
-    # Percorrer a lista de imagens e obter as datas e valores de precipitação
+    # Percorrer a lista de imagens e obter as datas e valores de precipitacao
     for i in range(precipitation.size().getInfo()):
         image = ee.Image(precipitation.toList(precipitation.size()).get(i))
         data = ee.Date(image.get('system:time_start')).format('yyyy-MM-dd').getInfo()
@@ -45,7 +45,7 @@ def calcula_pentada(dataInicio, dataFim):
         valor = image.reduceRegion(ee.Reducer.sum(), geometry=ee.Geometry.Point([-64.02760881257484, -4.436083218695817])).get('precipitation').getInfo()
         valores_por_ano[ano].append(valor)
 
-    # Criar um DataFrame a partir do dicionário de valores por ano
+    # Criar um DataFrame a partir do dicionario de valores por ano
     df_pentada = pd.DataFrame(valores_por_ano)
 
     # Adicionar uma coluna de Pentada
