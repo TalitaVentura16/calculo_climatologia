@@ -9,33 +9,28 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 def calcula_pentada(dataInicio, dataFim):
-    import ee
-
     # Autenticação e inicialização da API
     ee.Authenticate()
     ee.Initialize()
 
-
     # Base utilizada para a coleta de dados
-    # A base escolhida  é a CHIRPS - Grupo de Riscos Climaticos Precipitacao, os dados ja sao gerados com o intervado da
-    # pentada.
     dataset = ee.ImageCollection('UCSB-CHG/CHIRPS/PENTAD') \
         .filterDate(dataInicio, dataFim)
 
-    # Selecionar a banda de precipitacao
+    # Selecionar a banda de precipitação
     precipitation = dataset.select('precipitation')
 
-    # Obter informacoes das imagens e armazena em uma lista
-    image_list = precipitation.toList(precipitation.size())
-
-    # Inicializar variaveis para rastrear o ano e a numeracao da pentada
+    # Inicializar variáveis para rastrear o ano e a numeração da pentada
     ano_atual = None
     num_pentada = 0
 
+    # Crie um dicionário para armazenar os valores de precipitação por ano
+    valores_por_ano = {}
+
+    
     # Percorrer a lista de imagens e obter as datas e valores de precipitação
-    datasValores = []
-    for i in range(image_list.size().getInfo()):
-        image = ee.Image(image_list.get(i))
+    for i in range(precipitation.size().getInfo()):
+        image = ee.Image(precipitation.toList(precipitation.size()).get(i))
         data = ee.Date(image.get('system:time_start')).format('yyyy-MM-dd').getInfo()
         ano = data.split('-')[0]
 
@@ -43,29 +38,27 @@ def calcula_pentada(dataInicio, dataFim):
         if ano != ano_atual:
             ano_atual = ano
             num_pentada = 1
+            valores_por_ano[ano] = []
         else:
             num_pentada += 1
 
         valor = image.reduceRegion(ee.Reducer.sum(), geometry=ee.Geometry.Point([-64.02760881257484, -4.436083218695817])).get('precipitation').getInfo()
-        datasValores.append((data, valor, f"{num_pentada}º"))
+        valores_por_ano[ano].append(valor)
 
-    # Imprimir as datas e valores
-    for data, valor, num in datasValores:
-        print(f"{data}, {valor}, {num}")
+    # Criar um DataFrame a partir do dicionário de valores por ano
+    df_pentada = pd.DataFrame(valores_por_ano)
 
-    return datasValores
+    # Adicionar uma coluna de Pentada
+    df_pentada["Pentada"] = [f"{i}º" for i in range(1, len(df_pentada) + 1)]
 
+    return df_pentada
 
 # Definir datas de inicio e fim 
 dataInicio = datetime.strptime("01-01-2014", "%d-%m-%Y")
 dataFim = datetime.strptime("01-01-2016", "%d-%m-%Y")
-##dataFim = dataInicio + timedelta(days=306)
 
-
-# Chamar a funcao para calcular a pentada
+# Chamar a função para calcular a pentada
 df_pentada = calcula_pentada(dataInicio, dataFim)
-valoresPentada = pd.DataFrame(df_pentada, columns=["Data", "Valor de Precipitação", "Pentada"])
-print(valoresPentada)
 
 # Salvar o DataFrame no arquivo Excel
-valoresPentada.to_excel('pentada_amazonia.xlsx', index=False)
+df_pentada.to_excel('pentada_amazonia.xlsx', index=False)
