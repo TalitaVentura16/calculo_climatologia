@@ -50,7 +50,7 @@ O Google Earth Engine solicita algumas informações pessoais como nome, país, 
 
 Caso você faça parte de alguma instituição de iniciativa privada para trabalho pode ser necessário a configuração de informações diferentes, com justificativas diferentes, que podem inclusive solicitar o pagamento de planos. Certifique-se de fornecer informações precisas e relevantes de acordo com o seu caso específico.
 
-
+***Mudanças!***
 **OBS**
 
 Caso você tenha alguma dúvida não hesite em me contatar, meu objetivo assim como o seu é aprender 😉. 
