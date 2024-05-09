@@ -1,3 +1,5 @@
+## programa inicial
+
 import pandas as pd
 
 def detecta_inicio_seca(arquivo_excel):
