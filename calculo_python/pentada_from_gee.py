@@ -55,11 +55,11 @@ def calcula_pentada(dataInicio, dataFim):
 
 # Definir datas de inicio e fim 
 dataInicio = datetime.strptime("01-01-2010", "%d-%m-%Y")
-dataFim = datetime.strptime("01-01-2020", "%d-%m-%Y")
+dataFim = datetime.strptime("01-02-2010", "%d-%m-%Y")
 
 
 # Chamar a função para calcular a pentada
 df_pentada = calcula_pentada(dataInicio, dataFim)
 
 # Salvar o DataFrame no arquivo Excel
-df_pentada.to_excel('pentada_amazonia_atualizada.xlsx', index=False)
+df_pentada.to_excel('pentada_amazonia_atualizada_2024.xlsx', index=False)
