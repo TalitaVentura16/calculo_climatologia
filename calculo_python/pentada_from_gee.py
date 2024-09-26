@@ -54,7 +54,7 @@ def calcula_pentada(dataInicio, dataFim):
     return df_pentada
 
 # Definir datas de inicio e fim 
-dataInicio = datetime.strptime("01-01-2010", "%d-%m-%Y")
+dataInicio = datetime.strptime("01-01-2000", "%d-%m-%Y")
 dataFim = datetime.strptime("01-02-2010", "%d-%m-%Y")
 
 
